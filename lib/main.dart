@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'pages/Playlist.dart' as PlayList;
+
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const PlayList.Playlist(),
     );
   }
 }
@@ -59,8 +62,13 @@ class _MyHomePageState extends State<MyHomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-
-                _playbackControllerButton(),
+                Row(
+                  children: [
+                    Expanded(flex:5,child: IconButton(onPressed: _player.hasNext?_player.seekToNext:null, icon: Icon(Icons.skip_previous))),
+                    Expanded(flex:5,child: _playbackControllerButton()),
+                    Expanded(flex:5,child: IconButton(onPressed: _player.hasNext?_player.seekToNext:null, icon: Icon(Icons.skip_next))),
+                  ],
+                ),
                 _progressBar(),
                 Row(
                   children: [
@@ -84,10 +92,10 @@ class _MyHomePageState extends State<MyHomePage> {
           print("A stream error occured:$e");
         });
     try {
-      // await _player.setAudioSource(AudioSource.uri(Uri.parse(
-      //     "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3")));
-      await AudioPlayer.clearAssetCache();
-      await _player.setAsset('assets/song4.mp3');
+      await _player.setAudioSource(AudioSource.uri(Uri.parse(
+          "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3")));
+      // await AudioPlayer.clearAssetCache();
+      // await _player.setAsset('assets/song4.mp3');
     } catch (e) {
       print("Error");
     }
